@@ -1,6 +1,6 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
@@ -22,7 +22,7 @@ export const AmountTasks = styled.View`
   border-radius: 8px;
   align-items: center;
   justify-content: center;
-  background-color: #adadad;
+  background-color: #ffffff;
 `;
 
 export const AmountTasksText = styled.Text``;

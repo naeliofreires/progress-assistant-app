@@ -1,19 +1,40 @@
-import React from "react";
+import React, { useCallback } from 'react';
+import { SimpleLineIcons } from '@expo/vector-icons';
 
-import * as S from "./styles";
+import * as S from './styles';
+import { TaskType } from './types';
+import { Modal, useModalRef } from '../Modal';
+import { TaskDetails } from '../TaskDetails';
 
-export const Task = () => {
+export const Task = (task: TaskType) => {
+  const {
+    attributes: { title, description },
+  } = task;
+
+  const modal = useModalRef();
+  const closeModal = useCallback(() => {
+    modal.current.close();
+  }, []);
+
   return (
-    <S.Container>
-      <S.IconView />
-      <S.InformationView>
-        <S.Title>Item 01</S.Title>
-        <S.Description>
-          Description - maneira do Item 01 para funcionar fodamente
-          signal=undefined see troubleshooting:
-          https://github.com/jest-community/vscode-jest/blob/master/README.md#troubleshooting
-        </S.Description>
-      </S.InformationView>
-    </S.Container>
+    <>
+      <S.Container onPress={() => modal.current.open()}>
+        <S.IconView>
+          <SimpleLineIcons name="tag" size={24} color="black" />
+        </S.IconView>
+        <S.InformationView>
+          <S.Row>
+            <S.Title>{title}</S.Title>
+            <S.Done />
+          </S.Row>
+
+          <S.Description>{description}</S.Description>
+        </S.InformationView>
+      </S.Container>
+
+      <Modal ref={modal}>
+        <TaskDetails task={task} onPressBackButton={closeModal} />
+      </Modal>
+    </>
   );
 };

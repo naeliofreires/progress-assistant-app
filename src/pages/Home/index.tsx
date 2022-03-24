@@ -1,8 +1,9 @@
-import React from "react";
-import { Task } from "../../components/Task";
-import { useStore } from "../../store/StoreProvider";
+import React from 'react';
+import { FlatList, View } from 'react-native';
+import { Task } from '../../components/Task';
+import { useStore } from '../../store/StoreProvider';
 
-import * as S from "./styles";
+import * as S from './styles';
 
 export function Home() {
   const store = useStore();
@@ -13,9 +14,20 @@ export function Home() {
         <S.Title>your tasks</S.Title>
 
         <S.AmountTasks>
-          <S.AmountTasksText>10</S.AmountTasksText>
+          <S.AmountTasksText>{store.tasks?.length}</S.AmountTasksText>
         </S.AmountTasks>
       </S.SubHeader>
+
+      <FlatList
+        style={{
+          padding: 8,
+          backgroundColor: 'white',
+        }}
+        ItemSeparatorComponent={() => <View style={{ backgroundColor: 'transparent', width: '100%', height: 8 }} />}
+        data={store.tasks}
+        renderItem={({ item }) => <Task {...item} />}
+        keyExtractor={item => String(item.id)}
+      />
     </S.Container>
   );
 }
