@@ -1,4 +1,4 @@
-import { styled } from '../../theme';
+import { styled, css } from '../../theme';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -14,6 +14,10 @@ export const Header = styled.View`
   border-bottom-color: ${p => p.theme.palette.quinternaryColor};
 `;
 
+export const Box = styled.View`
+  padding: ${p => p.theme.units.half}px;
+`;
+
 export const BackButtonView = styled.View`
   position: absolute;
   border-radius: 8px;
@@ -26,14 +30,19 @@ export const Information = styled.ScrollView`
   flex: 1;
 `;
 
-export const InformationColumn = styled.View`
+export const InformationColumn = styled.View<{ lastItem?: boolean }>`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
 
   padding: ${p => p.theme.units.half}px ${p => p.theme.units.base}px;
-  border-bottom-width: 1px;
-  border-bottom-color: ${p => p.theme.palette.quinternaryColor};
+
+  ${p =>
+    !p.lastItem &&
+    css`
+      border-bottom-width: 1px;
+      border-bottom-color: ${p.theme.palette.quinternaryColor};
+    `}
 `;
 
 export const InformationRow = styled(InformationColumn)`
@@ -45,4 +54,27 @@ export const DescriptionView = styled.View`
   min-height: 100px;
   border-radius: 8px;
   background-color: ${p => p.theme.palette.quinternaryColor};
+`;
+
+export const ActionsBox = styled.View`
+  flex: 1;
+  align-items: stretch;
+  justify-content: center;
+  margin-top: ${p => p.theme.units.double}px;
+`;
+
+export const Button = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: ${p => p.theme.units.base}px;
+  margin-bottom: ${p => p.theme.units.half}px;
+`;
+
+export const FinishedButton = styled(Button)`
+  background-color: ${p => p.theme.palette.accent};
+`;
+
+export const DeleteButton = styled(Button)`
+  background-color: ${p => p.theme.palette.danger};
 `;

@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
+import { TaskDetails } from '../TaskDetails';
+import { Modal, useModalRef } from '../Modal';
+
 import * as S from './styles';
 import { TaskType } from './types';
-import { Modal, useModalRef } from '../Modal';
-import { TaskDetails } from '../TaskDetails';
 
 export const Task = (task: TaskType) => {
   const {
@@ -33,7 +34,16 @@ export const Task = (task: TaskType) => {
       </S.Container>
 
       <Modal ref={modal}>
-        <TaskDetails task={task} onPressBackButton={closeModal} />
+        <TaskDetails
+          task={task}
+          onPressBackButton={closeModal}
+          onPressFinishButton={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          onPressDeleteButton={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+        />
       </Modal>
     </>
   );

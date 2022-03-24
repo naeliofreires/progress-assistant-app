@@ -15,6 +15,9 @@ export default {
 
     backgroundDark: '#252525',
     backgroundLight: '#FFFFFF',
+
+    accent: '#6BCB77',
+    danger: '#FF6464',
   },
   units: {
     none: 0,

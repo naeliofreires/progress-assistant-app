@@ -15,6 +15,9 @@ export default interface ThemeInterface {
 
     backgroundDark: string;
     backgroundLight: string;
+
+    accent: string;
+    danger: string;
   };
 
   units: {
