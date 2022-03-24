@@ -1,4 +1,5 @@
 import { styled } from '../../theme';
+import { StyleSheet } from 'react-native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -24,3 +25,16 @@ export const AmountTasks = styled.View`
   justify-content: center;
   background-color: ${p => p.theme.palette.backgroundLight};
 `;
+
+export const ItemSepator = styled.View`
+  height: 10px;
+  width: 100%;
+  background-color: transparent;
+`;
+
+export const Styles = StyleSheet.create({
+  list: {
+    padding: 8,
+    backgroundColor: 'white',
+  },
+});

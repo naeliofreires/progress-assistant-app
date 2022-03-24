@@ -5,19 +5,32 @@ import { TaskType } from '../components/Task/types';
 import { TaskService } from '../graphql/services';
 import { ErrorTypeOverlap, PromiseResult, PROMISE_STATUS, StoreProviderType, TASK_STATUS } from './types';
 import { StorageUtil } from '../utils/StorageUtil';
+import { TaskUtil } from '../utils/TaskUtil';
 
 export const StoreContext = React.createContext({} as StoreProviderType);
+
+/**
+ * @Hooks
+ */
+export const useStore = () => React.useContext(StoreContext);
+export const useActions = () => useStore().actions;
 
 export const StoreProvider: React.FC = ({ children }) => {
   const [store, setStore] = useState(new StoreProviderType());
 
   function load() {
     TaskService.load().then(data => {
-      setStore(
-        produce(draft => {
-          draft.tasks = data;
-        })
-      );
+      setStore(previousStore => {
+        const previousSelectedStatus = previousStore.filter.selectedStatus;
+        const hasSelectedStatus = previousSelectedStatus !== TASK_STATUS.ALL;
+
+        if (hasSelectedStatus) {
+          const filteredTasks = TaskUtil.applyFilter(previousSelectedStatus, data);
+          return { ...previousStore, tasks: data, filteredTasks };
+        }
+
+        return { ...previousStore, tasks: data };
+      });
     });
   }
 
@@ -55,19 +68,7 @@ export const StoreProvider: React.FC = ({ children }) => {
     setStore(
       produce(draft => {
         draft.filter.selectedStatus = value;
-        switch (value) {
-          case TASK_STATUS.ALL:
-            draft.filteredTasks = [];
-            break;
-
-          case TASK_STATUS.IN_PROGRESS:
-            draft.filteredTasks = draft.tasks.filter(i => !i.attributes.completed);
-            break;
-
-          case TASK_STATUS.DONE:
-            draft.filteredTasks = draft.tasks.filter(i => i.attributes.completed);
-            break;
-        }
+        draft.filteredTasks = TaskUtil.applyFilter(value, draft.tasks);
       })
     );
   }, []);

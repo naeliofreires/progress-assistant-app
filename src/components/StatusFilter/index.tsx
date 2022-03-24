@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
-import { TASK_STATUS, useStore } from '../../store';
+import { TASK_STATUS } from '../../store/types';
+import { useStore } from '../../store/StoreProvider';
 import { StatusFilterOption } from '../StatusFilterOption';
 
 import * as S from './styles';

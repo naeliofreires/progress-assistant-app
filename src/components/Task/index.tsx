@@ -7,7 +7,7 @@ import { Modal, useModalRef } from '../Modal';
 
 import * as S from './styles';
 import { TaskType } from './types';
-import { useActions } from '../../store';
+import { useActions } from '../../store/StoreProvider';
 import { Text } from '../Text';
 import { DateUtil } from '../../utils/DateUtil';
 
