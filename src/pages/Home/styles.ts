@@ -5,7 +5,7 @@ export const Container = styled.SafeAreaView`
   flex: 1;
 `;
 
-export const SubHeader = styled.View`
+export const Header = styled.View`
   height: 40px;
   flex-direction: row;
   align-items: center;
@@ -30,6 +30,12 @@ export const ItemSepator = styled.View`
   height: 10px;
   width: 100%;
   background-color: transparent;
+`;
+
+export const PlusButtonView = styled.View`
+  position: absolute;
+  right: 16px;
+  bottom: 34px;
 `;
 
 export const Styles = StyleSheet.create({
