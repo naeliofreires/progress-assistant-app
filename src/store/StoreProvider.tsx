@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { produce } from 'immer';
 
 import { TaskType } from '../components/Task/types';
@@ -27,7 +27,11 @@ export const StoreProvider: React.FC = ({ children }) => {
         const storage = await StorageUtil.getStore();
 
         if (storage) {
-          setStore(previousStore => ({ ...previousStore, ...storage }));
+          if (storage.tasks.length === 0) {
+            load();
+          } else {
+            setStore(previousStore => ({ ...previousStore, ...storage }));
+          }
         } else {
           load();
         }
@@ -47,13 +51,26 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }, [store]);
 
-  const onChangeFilter = (value: TASK_STATUS): void => {
+  const onChangeFilter = useCallback((value: TASK_STATUS): void => {
     setStore(
       produce(draft => {
         draft.filter.selectedStatus = value;
+        switch (value) {
+          case TASK_STATUS.ALL:
+            draft.filteredTasks = [];
+            break;
+
+          case TASK_STATUS.IN_PROGRESS:
+            draft.filteredTasks = draft.tasks.filter(i => !i.attributes.completed);
+            break;
+
+          case TASK_STATUS.DONE:
+            draft.filteredTasks = draft.tasks.filter(i => i.attributes.completed);
+            break;
+        }
       })
     );
-  };
+  }, []);
 
   // async function add(data: TaskInput) {
   //   try {

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, View } from 'react-native';
-import { StatusFilter } from '../../components/StatusFilter';
+
+import { useStore } from '../../store';
 import { Task } from '../../components/Task';
 import { Text } from '../../components/Text';
-import { useStore } from '../../store';
+import { StatusFilter } from '../../components/StatusFilter';
 
 import * as S from './styles';
 
 export function Home() {
   const store = useStore();
+
+  const _data = useMemo(() => (store.filteredTasks.length ? store.filteredTasks : store.tasks), [store.filteredTasks, store.tasks]);
 
   return (
     <S.Container>
@@ -16,19 +19,16 @@ export function Home() {
         <Text value="your tasks" transform="uppercase" typography="secondary" color="primaryText" />
 
         <S.AmountTasks>
-          <Text value={String(store.tasks?.length ?? '')} transform="uppercase" typography="tertiary" color="primaryText" />
+          <Text value={String(_data?.length ?? '')} transform="uppercase" typography="tertiary" color="primaryText" />
         </S.AmountTasks>
       </S.SubHeader>
 
       <StatusFilter />
 
       <FlatList
-        style={{
-          padding: 8,
-          backgroundColor: 'white',
-        }}
+        style={{ padding: 8, backgroundColor: 'white' }}
+        data={_data}
         ItemSeparatorComponent={() => <View style={{ backgroundColor: 'transparent', width: '100%', height: 8 }} />}
-        data={store.tasks}
         renderItem={({ item }) => <Task {...item} />}
         keyExtractor={item => String(item.id)}
       />

@@ -24,6 +24,7 @@ export enum TASK_STATUS {
 
 export class StoreProviderType {
   tasks: TaskType[];
+  filteredTasks: TaskType[];
   filter: { selectedStatus: TASK_STATUS };
   actions!: {
     onChangeFilter(value: TASK_STATUS): void;
@@ -32,6 +33,7 @@ export class StoreProviderType {
 
   constructor() {
     this.tasks = [];
+    this.filteredTasks = [];
     this.filter = { selectedStatus: TASK_STATUS.ALL };
   }
 }
