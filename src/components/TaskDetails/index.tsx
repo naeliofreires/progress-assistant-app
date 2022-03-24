@@ -3,14 +3,15 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Fontisto } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 
 import { Text } from '../Text';
+import { useTheme } from '../../theme';
 import { BaseButton } from '../BaseButton';
 import { DateUtil } from '../../utils/DateUtil';
 
 import { Props } from './types';
 import * as S from './styles';
-import { useTheme } from '../../theme';
 
 export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishButton, onPressDeleteButton }: Props) => {
   const palette = useTheme().palette;
@@ -63,14 +64,24 @@ export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishB
         </S.InformationColumn>
 
         <S.ActionsBox>
-          <S.FinishedButton onPress={() => onPressFinishButton?.()}>
-            <MaterialIcons name="done" size={24} color="white" />
+          <S.FinishedButton completed={completed} onPress={() => onPressFinishButton?.()}>
+            {!completed ? (
+              <MaterialIcons name="done" size={24} color={palette.secondaryText} />
+            ) : (
+              <EvilIcons name="undo" size={24} color={palette.secondaryText} />
+            )}
+
             <S.Box />
-            <Text value="finish" color="secondaryText" typography="secondary" transform="uppercase" />
+
+            {!completed ? (
+              <Text value="finish" color="secondaryText" typography="secondary" transform="uppercase" />
+            ) : (
+              <Text value="undo" color="secondaryText" typography="secondary" transform="uppercase" />
+            )}
           </S.FinishedButton>
 
           <S.DeleteButton onPress={() => onPressDeleteButton?.()}>
-            <Entypo name="trash" size={24} color="white" />
+            <Entypo name="trash" size={24} color={palette.secondaryText} />
             <S.Box />
             <Text value="delete" color="secondaryText" typography="secondary" transform="uppercase" />
           </S.DeleteButton>

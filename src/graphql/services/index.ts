@@ -1,11 +1,9 @@
-import { RequestDocument, gql, request } from "graphql-request";
-import { ErrorType, TaskInput } from "./types";
-import { graphQLClient } from "../api";
-import { TaskType } from "../../components/Task/types";
+import { RequestDocument, gql } from 'graphql-request';
+import { ErrorType, TaskInput } from './types';
+import { graphQLClient } from '../api';
+import { TaskType } from '../../components/Task/types';
 
-async function load(
-  pagination = { page: 1, pageSize: 5 }
-): Promise<TaskType[]> {
+async function load(pagination = { page: 1, pageSize: 5 }): Promise<TaskType[]> {
   return new Promise(async (resolve, reject) => {
     try {
       const {
@@ -26,12 +24,13 @@ async function load(
             }
           }
         `,
-        { pagination, sort: ["date"] }
+        { pagination, sort: ['date'] }
       );
 
       resolve(data);
     } catch (e) {
-      reject((e as ErrorType).response?.errors ?? "an error occurred ");
+      console.log('->', e);
+      reject((e as ErrorType).response?.errors ?? 'an error occurred ');
     }
   });
 }
@@ -61,7 +60,7 @@ async function save(task: TaskInput): Promise<any> {
       const data = response?.createTask?.data;
       resolve(data);
     } catch (e: unknown) {
-      reject((e as ErrorType).response?.errors ?? "an error occurred ");
+      reject((e as ErrorType).response?.errors ?? 'an error occurred ');
     }
   });
 }
@@ -90,13 +89,12 @@ async function remove(id: number): Promise<void> {
       resolve(data);
     } catch (e) {
       const [error] = (e as ErrorType).response?.errors ?? [];
-
-      reject(error.message ?? "an error ocurred ");
+      reject(error.message ?? 'an error ocurred ');
     }
   });
 }
 
-async function update(task: any): Promise<any> {
+async function update(task: TaskType): Promise<TaskType> {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await graphQLClient.request(
@@ -121,12 +119,12 @@ async function update(task: any): Promise<any> {
         } as unknown as RequestDocument
       );
 
-      const { data } = response?.updateTask;
-      resolve(data as any);
+      const data = response?.updateTask.data as TaskType;
+
+      resolve(data);
     } catch (e) {
       const [error] = (e as ErrorType).response?.errors ?? [];
-
-      reject(error.message ?? "an error ocurred ");
+      reject(error.message ?? 'an error ocurred ');
     }
   });
 }

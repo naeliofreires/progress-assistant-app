@@ -6,20 +6,30 @@ import { Modal, useModalRef } from '../Modal';
 
 import * as S from './styles';
 import { TaskType } from './types';
+import { useActions } from '../../store';
 
 export const Task = (task: TaskType) => {
-  const {
-    attributes: { title, description },
-  } = task;
+  const actions = useActions();
+  const { title, description } = task.attributes;
 
   const modal = useModalRef();
+  const openModal = useCallback(() => {
+    modal.current.open();
+  }, []);
+
   const closeModal = useCallback(() => {
     modal.current.close();
   }, []);
 
+  const onPressFinishButton = useCallback(() => {
+    const attributes = task.attributes;
+    const data = { ...task, attributes: { ...attributes, completed: !attributes.completed } };
+    actions.update(data);
+  }, [task]);
+
   return (
     <>
-      <S.Container onPress={() => modal.current.open()}>
+      <S.Container onPress={openModal}>
         <S.IconView>
           <SimpleLineIcons name="tag" size={24} color="black" />
         </S.IconView>
@@ -37,9 +47,7 @@ export const Task = (task: TaskType) => {
         <TaskDetails
           task={task}
           onPressBackButton={closeModal}
-          onPressFinishButton={function (): void {
-            throw new Error('Function not implemented.');
-          }}
+          onPressFinishButton={onPressFinishButton}
           onPressDeleteButton={function (): void {
             throw new Error('Function not implemented.');
           }}

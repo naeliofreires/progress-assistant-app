@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { Task } from '../../components/Task';
-import { useStore } from '../../store/StoreProvider';
+import { useStore } from '../../store';
 
 import * as S from './styles';
 

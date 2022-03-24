@@ -71,8 +71,8 @@ export const Button = styled.TouchableOpacity`
   margin-bottom: ${p => p.theme.units.half}px;
 `;
 
-export const FinishedButton = styled(Button)`
-  background-color: ${p => p.theme.palette.accent};
+export const FinishedButton = styled(Button)<{ completed?: boolean }>`
+  background-color: ${p => (p.completed ? p.theme.palette.primaryColor : p.theme.palette.accent)};
 `;
 
 export const DeleteButton = styled(Button)`
