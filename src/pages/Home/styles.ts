@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import { styled } from '../../theme';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -13,7 +13,7 @@ export const SubHeader = styled.View`
   padding-left: 12px;
   padding-right: 12px;
   border-bottom-width: 1px;
-  border-bottom-color: #fff;
+  border-bottom-color: ${p => p.theme.palette.backgroundLight};
 `;
 
 export const AmountTasks = styled.View`
@@ -22,13 +22,5 @@ export const AmountTasks = styled.View`
   border-radius: 8px;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
-`;
-
-export const AmountTasksText = styled.Text``;
-
-export const Title = styled.Text`
-  color: #151515;
-  font-size: 12px;
-  text-transform: uppercase;
+  background-color: ${p => p.theme.palette.backgroundLight};
 `;

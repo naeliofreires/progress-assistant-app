@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 
 import { TaskDetails } from '../TaskDetails';
 import { Modal, useModalRef } from '../Modal';
@@ -7,10 +8,12 @@ import { Modal, useModalRef } from '../Modal';
 import * as S from './styles';
 import { TaskType } from './types';
 import { useActions } from '../../store';
+import { Text } from '../Text';
+import { DateUtil } from '../../utils/DateUtil';
 
 export const Task = (task: TaskType) => {
   const actions = useActions();
-  const { title, description } = task.attributes;
+  const { title, completed, date } = task.attributes;
 
   const modal = useModalRef();
   const openModal = useCallback(() => {
@@ -30,16 +33,16 @@ export const Task = (task: TaskType) => {
   return (
     <>
       <S.Container onPress={openModal}>
-        <S.IconView>
-          <SimpleLineIcons name="tag" size={24} color="black" />
+        <S.IconView completed={completed}>
+          {completed ? <EvilIcons name="check" size={50} color="white" /> : <SimpleLineIcons name="tag" size={30} color="white" />}
         </S.IconView>
         <S.InformationView>
           <S.Row>
-            <S.Title>{title}</S.Title>
-            <S.Done />
+            <Text value={title} typography="primary" color="primaryText" numberOfLines={1} />
           </S.Row>
-
-          <S.Description>{description}</S.Description>
+          <S.Row>
+            <Text value={DateUtil.formatDateToDayMonthYear(date)} typography="quartenary" color="primaryText" numberOfLines={1} />
+          </S.Row>
         </S.InformationView>
       </S.Container>
 

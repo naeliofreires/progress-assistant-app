@@ -16,9 +16,22 @@ export type ErrorTypeOverlap = {
   message: string;
 };
 
-export type StoreProviderType = {
+export enum TASK_STATUS {
+  ALL = 'ALL',
+  DONE = 'DONE',
+  IN_PROGRESS = 'IN_PROGRESS',
+}
+
+export class StoreProviderType {
   tasks: TaskType[];
-  actions: {
+  filter: { selectedStatus: TASK_STATUS };
+  actions!: {
+    onChangeFilter(value: TASK_STATUS): void;
     update(task: TaskType): Promise<PromiseResult<TaskType>>;
   };
-};
+
+  constructor() {
+    this.tasks = [];
+    this.filter = { selectedStatus: TASK_STATUS.ALL };
+  }
+}

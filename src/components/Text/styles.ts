@@ -1,24 +1,24 @@
 import { StyleSheet, TextStyle } from 'react-native';
 
-export type FONTS = 'primary' | 'secondary' | 'tertiary' | 'quartenaryFont' | 'onboarding' | 'description' | 'detailsHeader';
+export type FONTS = 'primary' | 'secondary' | 'tertiary' | 'quartenary' | 'description' | 'detailsHeader';
 
 export const TEXT_STYLES = StyleSheet.create({
   primary: {
-    fontSize: 34,
+    fontSize: 22,
     lineHeight: 41,
     fontWeight: '700',
   },
   secondary: {
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 20,
     fontWeight: '500',
     fontStyle: 'normal',
   },
   tertiary: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '400',
   },
-  quartenaryFont: {
+  quartenary: {
     fontSize: 14,
   },
   detailsHeader: {

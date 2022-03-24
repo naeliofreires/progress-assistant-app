@@ -1,6 +1,8 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
+import { StatusFilter } from '../../components/StatusFilter';
 import { Task } from '../../components/Task';
+import { Text } from '../../components/Text';
 import { useStore } from '../../store';
 
 import * as S from './styles';
@@ -11,12 +13,14 @@ export function Home() {
   return (
     <S.Container>
       <S.SubHeader>
-        <S.Title>your tasks</S.Title>
+        <Text value="your tasks" transform="uppercase" typography="secondary" color="primaryText" />
 
         <S.AmountTasks>
-          <S.AmountTasksText>{store.tasks?.length}</S.AmountTasksText>
+          <Text value={String(store.tasks?.length ?? '')} transform="uppercase" typography="tertiary" color="primaryText" />
         </S.AmountTasks>
       </S.SubHeader>
+
+      <StatusFilter />
 
       <FlatList
         style={{

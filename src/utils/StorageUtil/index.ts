@@ -26,6 +26,7 @@ async function getStore(): Promise<StoreProviderType | null> {
     throw new Error(`Error to get the store[${key}]: ${e}`);
   }
 }
+
 export const StorageUtil = {
   setStore,
   getStore,

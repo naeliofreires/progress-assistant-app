@@ -30,7 +30,7 @@ export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishB
 
       <S.Information>
         <S.InformationRow>
-          <Text value={title} transform="uppercase" color={palette.quartenaryColor} typography="secondary" numberOfLines={1} />
+          <Text value={title} transform="uppercase" color={palette.quartenaryColor} typography="tertiary" numberOfLines={1} />
         </S.InformationRow>
 
         <S.InformationRow>
@@ -45,9 +45,9 @@ export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishB
           <S.Box />
 
           {completed ? (
-            <Text value="done 😃" transform="uppercase" color={palette.quartenaryColor} typography="secondary" />
+            <Text value="done 😃" transform="uppercase" color={palette.quartenaryColor} typography="tertiary" />
           ) : (
-            <Text value="in progress..." transform="uppercase" color={palette.quartenaryColor} typography="secondary" />
+            <Text value="In progress..." color={palette.quartenaryColor} typography="tertiary" />
           )}
         </S.InformationRow>
 
@@ -55,7 +55,7 @@ export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishB
           <S.InformationRow>
             <MaterialIcons name="description" size={30} color={palette.quartenaryColor} />
             <S.Box />
-            <Text value="description" transform="uppercase" color={palette.quartenaryColor} typography="secondary" />
+            <Text value="description" transform="uppercase" color={palette.quartenaryColor} typography="tertiary" />
           </S.InformationRow>
 
           <S.DescriptionView>
@@ -74,16 +74,16 @@ export const TaskDetails = React.memo(({ task, onPressBackButton, onPressFinishB
             <S.Box />
 
             {!completed ? (
-              <Text value="finish" color="secondaryText" typography="secondary" transform="uppercase" />
+              <Text value="finish" color="secondaryText" typography="tertiary" transform="uppercase" />
             ) : (
-              <Text value="undo" color="secondaryText" typography="secondary" transform="uppercase" />
+              <Text value="undo" color="secondaryText" typography="tertiary" transform="uppercase" />
             )}
           </S.FinishedButton>
 
           <S.DeleteButton onPress={() => onPressDeleteButton?.()}>
             <Entypo name="trash" size={24} color={palette.secondaryText} />
             <S.Box />
-            <Text value="delete" color="secondaryText" typography="secondary" transform="uppercase" />
+            <Text value="delete" color="secondaryText" typography="tertiary" transform="uppercase" />
           </S.DeleteButton>
         </S.ActionsBox>
       </S.Information>

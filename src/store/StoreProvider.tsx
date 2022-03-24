@@ -3,13 +3,13 @@ import { produce } from 'immer';
 
 import { TaskType } from '../components/Task/types';
 import { TaskService } from '../graphql/services';
-import { ErrorTypeOverlap, PromiseResult, PROMISE_STATUS, StoreProviderType } from './types';
+import { ErrorTypeOverlap, PromiseResult, PROMISE_STATUS, StoreProviderType, TASK_STATUS } from './types';
 import { StorageUtil } from '../utils/StorageUtil';
 
 export const StoreContext = React.createContext({} as StoreProviderType);
 
 export const StoreProvider: React.FC = ({ children }) => {
-  const [store, setStore] = useState({} as StoreProviderType);
+  const [store, setStore] = useState(new StoreProviderType());
 
   function load() {
     TaskService.load().then(data => {
@@ -46,6 +46,14 @@ export const StoreProvider: React.FC = ({ children }) => {
       throw new Error(`Error to persist the store in the device: ${error}`);
     }
   }, [store]);
+
+  const onChangeFilter = (value: TASK_STATUS): void => {
+    setStore(
+      produce(draft => {
+        draft.filter.selectedStatus = value;
+      })
+    );
+  };
 
   // async function add(data: TaskInput) {
   //   try {
@@ -97,7 +105,7 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }
 
-  const value = { ...store, actions: { update } };
+  const value = { ...store, actions: { update, onChangeFilter } };
 
   return (
     <StoreContext.Provider
