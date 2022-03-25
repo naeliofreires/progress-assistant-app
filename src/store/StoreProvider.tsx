@@ -94,20 +94,25 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }
 
-  // async function remove(id: number) {
-  //   try {
-  //     await TaskService.remove(id);
+  async function remove(id: number) {
+    try {
+      await TaskService.remove(id);
 
-  //     // await load();
+      await load();
 
-  //     return { status: PROMISE_STATUS.SUCCESS };
-  //   } catch (e) {
-  //     return {
-  //       status: PROMISE_STATUS.FAILURE,
-  //       message: (e as ErrorTypeOverlap[])[0].message as string,
-  //     };
-  //   }
-  // }
+      return {
+        data: null,
+        status: PROMISE_STATUS.SUCCESS,
+        message: 'the task was deleted with success',
+      };
+    } catch (e) {
+      return {
+        data: null,
+        status: PROMISE_STATUS.FAILURE,
+        message: (e as ErrorTypeOverlap[])[0].message as string,
+      };
+    }
+  }
 
   async function update(data: TaskType): Promise<PromiseResult<TaskType | null>> {
     try {
@@ -129,7 +134,7 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }
 
-  const value = { ...store, actions: { update, onChangeFilter, add } };
+  const value = { ...store, actions: { add, remove, update, onChangeFilter } };
 
   return (
     <StoreContext.Provider

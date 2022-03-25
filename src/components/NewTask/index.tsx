@@ -20,7 +20,7 @@ export const NewTask = ({ onPressCancel, onPressSaveCallback }: { onPressCancel(
   const [loading, setLoading] = useState(false);
   const [task, setTask] = useState({ date: new Date().toISOString() } as TaskInput);
 
-  const formIsValid = useMemo(() => task.title && task.date && task.description.length >= 10, [task]);
+  const formIsValid = useMemo(() => task.title && task.date && task.description?.length >= 10, [task]);
 
   const onChange = useCallback((_: Event, selectedValue?: Date) => {
     const date = selectedValue ?? new Date();

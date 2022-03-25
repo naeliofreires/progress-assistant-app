@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Alert } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 
@@ -24,10 +25,20 @@ export const Task = (task: TaskType) => {
     modal.current.close();
   }, []);
 
-  const onPressFinishButton = useCallback(() => {
+  const onPressFinishButton = useCallback(async () => {
     const attributes = task.attributes;
     const data = { ...task, attributes: { ...attributes, completed: !attributes.completed } };
-    actions.update(data);
+    await actions.update(data);
+  }, [task]);
+
+  const onPressDeleteButton = useCallback(() => {
+    Alert.alert('Attention', 'Are you sure about deleting this task?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      { text: 'OK', onPress: async () => await actions.remove(task.id as number) },
+    ]);
   }, [task]);
 
   return (
@@ -47,14 +58,7 @@ export const Task = (task: TaskType) => {
       </S.Container>
 
       <Modal ref={modal}>
-        <TaskDetails
-          task={task}
-          onPressBackButton={closeModal}
-          onPressFinishButton={onPressFinishButton}
-          onPressDeleteButton={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-        />
+        <TaskDetails task={task} onPressBackButton={closeModal} onPressFinishButton={onPressFinishButton} onPressDeleteButton={onPressDeleteButton} />
       </Modal>
     </>
   );
