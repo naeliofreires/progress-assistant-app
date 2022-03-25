@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { FlatList } from 'react-native';
+import LottieView from 'lottie-react-native';
 
 import { Task } from '../../components/Task';
 import { Text } from '../../components/Text';
@@ -11,7 +12,6 @@ import { Modal, useModalRef } from '../../components/Modal';
 import { StatusFilter } from '../../components/StatusFilter';
 
 import * as S from './styles';
-import { TaskInput } from '../../graphql/services/types';
 
 export function Home() {
   const store = useStore();
@@ -30,7 +30,7 @@ export function Home() {
     modal.current.close();
   };
 
-  const onPressSaveTaskCallback = (task: TaskInput) => {};
+  const onPressSaveTaskCallback = status => {};
 
   return (
     <S.Container>
@@ -44,8 +44,28 @@ export function Home() {
 
       <StatusFilter />
 
+      {_data.length ? (
+        <FlatList
+          data={_data}
+          initialNumToRender={5}
+          style={S.Styles.list}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => <Task {...item} />}
+          ItemSeparatorComponent={() => <S.ItemSepator />}
+        />
+      ) : (
+        <S.FeedbackView>
+          <LottieView
+            autoPlay
+            style={{ width: 200, height: 200, backgroundColor: 'transparent' }}
+            source={require('../../assets/animations/empty-search.json')}
+          />
+        </S.FeedbackView>
+      )}
+
       <FlatList
         data={_data}
+        initialNumToRender={5}
         style={S.Styles.list}
         keyExtractor={item => String(item.id)}
         renderItem={({ item }) => <Task {...item} />}

@@ -44,3 +44,10 @@ export const Styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+
+export const FeedbackView = styled.View`
+  flex: 1;
+  align-items: center;
+  background-color: white;
+  justify-content: center;
+`;
