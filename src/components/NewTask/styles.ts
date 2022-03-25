@@ -9,11 +9,14 @@ export const InnerContainer = styled.ScrollView`
   flex: 1;
 `;
 
-export const Form = styled.View`
-  padding: ${p => p.theme.units.base}px;
-`;
+export const Form = styled.View``;
 
-export const InputView = styled.View(({ theme }) => ({ paddingVertical: theme.units.base }));
+export const InputView = styled.View(({ theme }) => ({
+  paddingVertical: theme.units.base,
+  borderBottomWidth: 1,
+  paddingHorizontal: theme.units.base,
+  borderBottomColor: theme.palette.quinternaryColor,
+}));
 
 export const InputViewRow = styled.View`
   flex: 1;
@@ -22,10 +25,11 @@ export const InputViewRow = styled.View`
   align-items: center;
 `;
 
-export const InputText = styled.TextInput(({ theme }) => ({
+export const InputText = styled.TextInput(({ theme, multiline }) => ({
   borderWidth: 1,
   padding: theme.units.half,
   borderRadius: theme.units.half,
+  height: multiline ? 100 : 40,
 }));
 
 export const Box = styled.View`
@@ -48,7 +52,7 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const FinishedButton = styled(Button)`
-  background-color: ${p => p.theme.palette.accent};
+  background-color: ${p => (p.disabled ? p.theme.palette.secondaryColor : p.theme.palette.accent)};
 `;
 
 export const DeleteButton = styled(Button)`

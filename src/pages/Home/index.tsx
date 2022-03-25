@@ -4,13 +4,14 @@ import { FlatList } from 'react-native';
 import { Task } from '../../components/Task';
 import { Text } from '../../components/Text';
 import { TASK_STATUS } from '../../store/types';
+import { NewTask } from '../../components/NewTask';
 import { useStore } from '../../store/StoreProvider';
 import { PlusButton } from '../../components/PlusButton';
+import { Modal, useModalRef } from '../../components/Modal';
 import { StatusFilter } from '../../components/StatusFilter';
 
 import * as S from './styles';
-import { Modal, useModalRef } from '../../components/Modal';
-import { NewTask } from '../../components/NewTask';
+import { TaskInput } from '../../graphql/services/types';
 
 export function Home() {
   const store = useStore();
@@ -24,9 +25,12 @@ export function Home() {
   const openModal = () => {
     modal.current.open();
   };
+
   const closeModal = () => {
     modal.current.close();
   };
+
+  const onPressSaveTaskCallback = (task: TaskInput) => {};
 
   return (
     <S.Container>
@@ -53,7 +57,7 @@ export function Home() {
       </S.PlusButtonView>
 
       <Modal ref={modal}>
-        <NewTask onPressCancel={closeModal} />
+        <NewTask onPressCancel={closeModal} onPressSaveCallback={onPressSaveTaskCallback} />
       </Modal>
     </S.Container>
   );

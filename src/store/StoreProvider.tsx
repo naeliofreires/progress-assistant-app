@@ -6,6 +6,7 @@ import { TaskService } from '../graphql/services';
 import { ErrorTypeOverlap, PromiseResult, PROMISE_STATUS, StoreProviderType, TASK_STATUS } from './types';
 import { StorageUtil } from '../utils/StorageUtil';
 import { TaskUtil } from '../utils/TaskUtil';
+import { TaskInput } from '../graphql/services/types';
 
 export const StoreContext = React.createContext({} as StoreProviderType);
 
@@ -73,20 +74,25 @@ export const StoreProvider: React.FC = ({ children }) => {
     );
   }, []);
 
-  // async function add(data: TaskInput) {
-  //   try {
-  //     await TaskService.save(data);
+  async function add(data: TaskInput): Promise<PromiseResult<TaskType | null>> {
+    try {
+      const task = await TaskService.save(data);
 
-  //     await load();
+      await load();
 
-  //     return { status: PROMISE_STATUS.SUCCESS };
-  //   } catch (error) {
-  //     return {
-  //       status: PROMISE_STATUS.FAILURE,
-  //       message: (error as ErrorTypeOverlap[])[0].message as string,
-  //     };
-  //   }
-  // }
+      return {
+        data: task,
+        status: PROMISE_STATUS.SUCCESS,
+        message: 'the task was created with success',
+      };
+    } catch (error) {
+      return {
+        data: null,
+        status: PROMISE_STATUS.FAILURE,
+        message: (error as ErrorTypeOverlap[])[0].message as string,
+      };
+    }
+  }
 
   // async function remove(id: number) {
   //   try {
@@ -123,7 +129,7 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }
 
-  const value = { ...store, actions: { update, onChangeFilter } };
+  const value = { ...store, actions: { update, onChangeFilter, add } };
 
   return (
     <StoreContext.Provider

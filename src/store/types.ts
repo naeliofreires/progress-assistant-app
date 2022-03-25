@@ -1,4 +1,5 @@
 import { TaskType } from '../components/Task/types';
+import { TaskInput } from '../graphql/services/types';
 
 export enum PROMISE_STATUS {
   SUCCESS = 'SUCCESS',
@@ -26,8 +27,10 @@ export class StoreProviderType {
   tasks: TaskType[];
   filteredTasks: TaskType[];
   filter: { selectedStatus: TASK_STATUS };
+
   actions!: {
     onChangeFilter(value: TASK_STATUS): void;
+    add(task: TaskInput): Promise<PromiseResult<TaskType>>;
     update(task: TaskType): Promise<PromiseResult<TaskType>>;
   };
 
