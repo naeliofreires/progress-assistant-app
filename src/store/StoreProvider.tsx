@@ -134,7 +134,7 @@ export const StoreProvider: React.FC = ({ children }) => {
     }
   }
 
-  const value = { ...store, actions: { add, remove, update, onChangeFilter } };
+  const value = { ...store, actions: { add, remove, update, load, onChangeFilter } };
 
   return (
     <StoreContext.Provider

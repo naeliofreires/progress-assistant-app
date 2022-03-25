@@ -30,6 +30,7 @@ export class StoreProviderType {
 
   actions!: {
     onChangeFilter(value: TASK_STATUS): void;
+    load(): Promise<void>;
     remove(id: number): Promise<void>;
     add(task: TaskInput): Promise<PromiseResult<TaskType>>;
     update(task: TaskType): Promise<PromiseResult<TaskType>>;

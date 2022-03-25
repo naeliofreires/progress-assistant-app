@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FlatList } from 'react-native';
 import LottieView from 'lottie-react-native';
 
@@ -16,6 +16,7 @@ import * as S from './styles';
 export function Home() {
   const store = useStore();
   const modal = useModalRef();
+  const [refreshing, setRefreshing] = useState(false);
 
   const _data = useMemo(() => {
     const hasSelectedStatus = store.filter.selectedStatus !== TASK_STATUS.ALL;
@@ -31,6 +32,12 @@ export function Home() {
   };
 
   const onPressSaveTaskCallback = status => {};
+
+  const pushDownRefresh = async () => {
+    setRefreshing(true);
+    await store.actions.load();
+    setRefreshing(false);
+  };
 
   return (
     <S.Container>
@@ -49,6 +56,8 @@ export function Home() {
           data={_data}
           initialNumToRender={5}
           style={S.Styles.list}
+          refreshing={refreshing}
+          onRefresh={pushDownRefresh}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => <Task {...item} />}
           ItemSeparatorComponent={() => <S.ItemSepator />}
