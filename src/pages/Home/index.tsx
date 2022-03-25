@@ -63,15 +63,6 @@ export function Home() {
         </S.FeedbackView>
       )}
 
-      <FlatList
-        data={_data}
-        initialNumToRender={5}
-        style={S.Styles.list}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => <Task {...item} />}
-        ItemSeparatorComponent={() => <S.ItemSepator />}
-      />
-
       <S.PlusButtonView>
         <PlusButton onPress={openModal} />
       </S.PlusButtonView>
